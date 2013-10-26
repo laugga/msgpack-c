@@ -751,6 +751,32 @@ msgpack_pack_inline_func(_raw_body)(msgpack_pack_user x, const void* b, size_t l
 	msgpack_pack_append_buffer(x, (const unsigned char*)b, l);
 }
 
+
+/*
+ * Universally unique identifier
+ */
+
+msgpack_pack_inline_func(_uuid)(msgpack_pack_user x, size_t l)
+{
+  if(l == 16)
+  {
+    static const unsigned char d = 0xd4;
+  	msgpack_pack_append_buffer(x, &d, 1);
+  }
+  
+  return -1; // invalid length, uuid must be exactly 16-byte long
+}
+
+msgpack_pack_inline_func(_uuid_body)(msgpack_pack_user x, const void* b, size_t l)
+{
+  if(l == 16)
+  {
+	  msgpack_pack_append_buffer(x, (const unsigned char*)b, l);
+  }
+  
+  return -1; // invalid length, uuid must be exactly 16-byte long
+}
+
 #undef msgpack_pack_inline_func
 #undef msgpack_pack_user
 #undef msgpack_pack_append_buffer

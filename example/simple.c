@@ -11,11 +11,16 @@ int main(void)
 	msgpack_packer pk;
 	msgpack_packer_init(&pk, &sbuf, msgpack_sbuffer_write);
 
-	msgpack_pack_array(&pk, 3);
+	msgpack_pack_array(&pk, 4);
 	msgpack_pack_int(&pk, 1);
 	msgpack_pack_true(&pk);
-	msgpack_pack_raw(&pk, 7);
-	msgpack_pack_raw_body(&pk, "example", 7);
+	msgpack_pack_raw(&pk, 9);
+	msgpack_pack_raw_body(&pk, "123456789", 9);
+  
+  uint8_t uuid[16] = {0x55,0x0e,0x84,0x00,0xe2,0x9b,0x41,0xd4,0xa7,0x16,0x44,0x66,0x55,0x44,0x00,0x00};
+  
+  msgpack_pack_uuid(&pk, 16);
+  msgpack_pack_uuid_body(&pk, uuid, 16);
 
 	/* deserialize the buffer into msgpack_object instance. */
 	/* deserialized object is valid during the msgpack_zone instance alive. */

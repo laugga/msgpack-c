@@ -74,6 +74,10 @@ std::ostream& operator<< (std::ostream& s, const object o)
 		}
 		s << "}";
 		break;
+    
+  case type::UUID:
+  	(s << '*').write(o.via.raw.ptr, o.via.raw.size) << '*';
+  	break;
 
 	default:
 		// FIXME

@@ -92,6 +92,13 @@ int msgpack_pack_object(msgpack_packer* pk, msgpack_object d)
 
 			return 0;
 		}
+    
+	case MSGPACK_OBJECT_UUID:
+		{
+			int ret = msgpack_pack_uuid(pk, d.via.raw.size);
+			if(ret < 0) { return ret; }
+			return msgpack_pack_uuid_body(pk, d.via.raw.ptr, d.via.raw.size);
+		}
 
 	default:
 		return -1;
@@ -161,6 +168,10 @@ void msgpack_object_print(FILE* out, msgpack_object o)
 		}
 		fprintf(out, "}");
 		break;
+    
+	case MSGPACK_OBJECT_UUID:
+		fprintf(out, "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",(uint8_t)o.via.raw.ptr[0],(uint8_t)o.via.raw.ptr[1],(uint8_t)o.via.raw.ptr[2],(uint8_t)o.via.raw.ptr[3],(uint8_t)o.via.raw.ptr[4],(uint8_t)o.via.raw.ptr[5],(uint8_t)o.via.raw.ptr[6],(uint8_t)o.via.raw.ptr[7],(uint8_t)o.via.raw.ptr[8],(uint8_t)o.via.raw.ptr[9],(uint8_t)o.via.raw.ptr[10],(uint8_t)o.via.raw.ptr[11],(uint8_t)o.via.raw.ptr[12],(uint8_t)o.via.raw.ptr[13],(uint8_t)o.via.raw.ptr[14],(uint8_t)o.via.raw.ptr[15]);
+		break;
 
 	default:
 		// FIXME
@@ -229,6 +240,10 @@ bool msgpack_object_equal(const msgpack_object x, const msgpack_object y)
 			} while(px < pxend);
 			return true;
 		}
+    
+	case MSGPACK_OBJECT_UUID:
+		return x.via.raw.size == y.via.raw.size &&
+			memcmp(x.via.raw.ptr, y.via.raw.ptr, x.via.raw.size) == 0;
 
 	default:
 		return false;

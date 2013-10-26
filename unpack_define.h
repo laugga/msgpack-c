@@ -60,7 +60,7 @@ typedef enum {
 	CS_INT_32            = 0x12,
 	CS_INT_64            = 0x13,
 
-	//CS_FIXEXT_1        = 0x14,
+	CS_FIXEXT_1          = 0x14,
 	//CS_FIXEXT_2        = 0x15,
 	//CS_FIXEXT_4        = 0x16,
 	//CS_FIXEXT_8        = 0x17,

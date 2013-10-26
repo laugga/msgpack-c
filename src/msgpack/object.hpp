@@ -43,6 +43,7 @@ namespace type {
 		RAW					= MSGPACK_OBJECT_RAW,
 		ARRAY				= MSGPACK_OBJECT_ARRAY,
 		MAP					= MSGPACK_OBJECT_MAP,
+    UUID				= MSGPACK_OBJECT_UUID,
 	};
 }
 
@@ -405,6 +406,11 @@ packer<Stream>& operator<< (packer<Stream>& o, const object& v)
 			o << p->key;
 			o << p->val;
 		}
+		return o;
+    
+	case type::UUID:
+    o.pack_uuid(v.via.raw.size);
+	  o.pack_uuid_body(v.via.raw.ptr, v.via.raw.size);
 		return o;
 
 	default:

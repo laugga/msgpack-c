@@ -219,8 +219,11 @@ msgpack_unpack_func(int, _execute)(msgpack_unpack_struct(_context)* ctx, const c
 				case 0xd2:  // signed int 32
 				case 0xd3:  // signed int 64
 					again_fixed_trail(NEXT_CS(p), 1 << (((unsigned int)*p) & 0x03));
-				//case 0xd4:
-				//case 0xd5:
+          
+        case 0xd4:
+          again_fixed_trail(NEXT_CS(p), 16);
+          
+        //case 0xd5:
 				//case 0xd6:  // big integer 16
 				//case 0xd7:  // big integer 32
 				//case 0xd8:  // big float 16
@@ -251,9 +254,9 @@ msgpack_unpack_func(int, _execute)(msgpack_unpack_struct(_context)* ctx, const c
 
 		_fixed_trail_again:
 			++p;
-
+      
 		default:
-			if((size_t)(pe - p) < trail) { goto _out; }
+			if((size_t)(pe - p) < trail) {  goto _out; }
 			n = p;  p += trail - 1;
 			switch(cs) {
 			//case CS_
@@ -288,6 +291,9 @@ msgpack_unpack_func(int, _execute)(msgpack_unpack_struct(_context)* ctx, const c
 			case CS_INT_64:
 				push_fixed_value(_int64, _msgpack_load64(int64_t,n));
 
+      case CS_FIXEXT_1:
+        push_variable_value(_uuid, data, n, trail);
+          
 			//case CS_
 			//case CS_
 			//case CS_BIG_INT_16:
@@ -307,7 +313,7 @@ msgpack_unpack_func(int, _execute)(msgpack_unpack_struct(_context)* ctx, const c
 			//_big_float_zero:
 			//	// FIXME
 			//	push_variable_value(_big_float, data, n, trail);
-
+        
 			case CS_BIN_8:
 			case CS_RAW_8:
 				again_fixed_trail_if_zero(ACS_RAW_VALUE, *(uint8_t*)n, _raw_zero);

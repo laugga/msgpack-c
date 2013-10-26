@@ -139,6 +139,15 @@ static inline int template_callback_raw(unpack_user* u, const char* b, const cha
 	return 0;
 }
 
+static inline int template_callback_uuid(unpack_user* u, const char* b, const char* p, unsigned int l, msgpack_object* o)
+{
+	o->type = MSGPACK_OBJECT_UUID;
+	o->via.raw.ptr = p;
+	o->via.raw.size = l;
+	u->referenced = true;
+	return 0;
+}
+
 #include "msgpack/unpack_template.h"
 
 
