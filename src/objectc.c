@@ -170,7 +170,7 @@ void msgpack_object_print(FILE* out, msgpack_object o)
 		break;
     
 	case MSGPACK_OBJECT_UUID:
-		fprintf(out, "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",(uint8_t)o.via.raw.ptr[0],(uint8_t)o.via.raw.ptr[1],(uint8_t)o.via.raw.ptr[2],(uint8_t)o.via.raw.ptr[3],(uint8_t)o.via.raw.ptr[4],(uint8_t)o.via.raw.ptr[5],(uint8_t)o.via.raw.ptr[6],(uint8_t)o.via.raw.ptr[7],(uint8_t)o.via.raw.ptr[8],(uint8_t)o.via.raw.ptr[9],(uint8_t)o.via.raw.ptr[10],(uint8_t)o.via.raw.ptr[11],(uint8_t)o.via.raw.ptr[12],(uint8_t)o.via.raw.ptr[13],(uint8_t)o.via.raw.ptr[14],(uint8_t)o.via.raw.ptr[15]);
+		fprintf(out, "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x%02x%02x",(uint8_t)o.via.raw.ptr[0],(uint8_t)o.via.raw.ptr[1],(uint8_t)o.via.raw.ptr[2],(uint8_t)o.via.raw.ptr[3],(uint8_t)o.via.raw.ptr[4],(uint8_t)o.via.raw.ptr[5],(uint8_t)o.via.raw.ptr[6],(uint8_t)o.via.raw.ptr[7],(uint8_t)o.via.raw.ptr[8],(uint8_t)o.via.raw.ptr[9],(uint8_t)o.via.raw.ptr[10],(uint8_t)o.via.raw.ptr[11],(uint8_t)o.via.raw.ptr[12],(uint8_t)o.via.raw.ptr[13],(uint8_t)o.via.raw.ptr[14],(uint8_t)o.via.raw.ptr[15]);
 		break;
 
 	default:
